@@ -22,9 +22,21 @@ func main() {
 
 	r.HandleFunc("/", controllers.HomeInfo).Methods("GET")
 
-	r.HandleFunc("/users", func(w http.ResponseWriter, req *http.Request) {
+	r.HandleFunc("/user", func(w http.ResponseWriter, req *http.Request) {
 		controllers.NewUser(w, req, db)
 	}).Methods("POST")
+
+	r.HandleFunc("/user/update", func(w http.ResponseWriter, req *http.Request) {
+		controllers.UpdateUser(w, req, db)
+	}).Methods("POST")
+
+	r.HandleFunc("/user/{key}", func(w http.ResponseWriter, req *http.Request) {
+		controllers.GetUser(w, req, db)
+	}).Methods("POST")
+
+	r.HandleFunc("/users", func(w http.ResponseWriter, req *http.Request) {
+		controllers.GetAllUsers(w, req, db)
+	}).Methods("GET")
 
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		log.Fatal(err)
