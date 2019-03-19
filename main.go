@@ -38,6 +38,10 @@ func main() {
 		controllers.GetAllUsers(w, req, db)
 	}).Methods("GET")
 
+	r.HandleFunc("/find", func(w http.ResponseWriter, req *http.Request) {
+		controllers.SearchUser(w, req, db)
+	}).Methods("POST")
+
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		log.Fatal(err)
 	}

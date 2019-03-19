@@ -26,3 +26,8 @@ type ViewResponse struct {
 	Offset    int          `json:"offset"`
 	Rows      []ViewResult `json:"rows,omitempty"`
 }
+
+// FindResponse type
+type FindResponse struct {
+	Docs []User `json:"docs"`
+}

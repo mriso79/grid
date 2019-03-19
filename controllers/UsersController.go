@@ -95,3 +95,28 @@ func GetUser(w http.ResponseWriter, req *http.Request, db *couchdb.Database) {
 
 	u.SendJSONResponse(w, user)
 }
+
+//SearchUser search in the database
+func SearchUser(w http.ResponseWriter, req *http.Request, db *couchdb.Database) {
+
+	var selectorObj interface{}
+
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(&selectorObj)
+
+	params := couchdb.FindQueryParams{Selector: &selectorObj}
+
+	if err != nil {
+		panic(err)
+	}
+
+	result := m.FindResponse{}
+
+	err = db.Find(&result, &params)
+
+	if err != nil {
+		panic(err)
+	}
+
+	u.SendJSONResponse(w, result)
+}
