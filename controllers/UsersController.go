@@ -105,11 +105,6 @@ func SearchUser(w http.ResponseWriter, req *http.Request, db *couchdb.Database) 
 	err := decoder.Decode(&selectorObj)
 
 	params := couchdb.FindQueryParams{Selector: &selectorObj}
-
-	if err != nil {
-		panic(err)
-	}
-
 	result := m.FindResponse{}
 
 	err = db.Find(&result, &params)
